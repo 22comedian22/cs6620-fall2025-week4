@@ -8,39 +8,44 @@ APP_VERSION = os.environ.get("APP_VERSION", "1.0-manual")
 DEPLOY_METHOD = os.environ.get("DEPLOY_METHOD", "Manual (SSH)")
 DEPLOY_TIME = os.environ.get("DEPLOY_TIME", "unknown")
 
-def add(a,b):
+
+def add(a, b):
     """Add two numbers"""
-    return a+b
+    return a + b
+
 
 def subtract(a, b):
     """Subtract two numbers"""
     return a - b
 
-def multiply(a,b):
+
+def multiply(a, b):
     """Multiply two numbers"""
-    return a*b
+    return a * b
+
 
 def divide(a, b):
     """Divide two numbers"""
-    if b==0:
+    if b == 0:
         raise ValueError("Cannot divide by zero")
-    return a/b
+    return a / b
 
 
 def calculate(operation, num1, num2):
     """Perform calculation based on operation"""
     if operation == 'add':
-        result = add(num1,num2)
+        result = add(num1, num2)
     elif operation == 'subtract':
         result = subtract(num1, num2)
     elif operation == 'multiply':
-        result = multiply(num1,num2)
+        result = multiply(num1, num2)
     elif operation == 'divide':
         result = divide(num1, num2)
     else:
         raise ValueError(f"Unknown operation: {operation}")
-    
+
     return result
+
 
 class Handler(BaseHTTPRequestHandler):
     def _send(self, content_type, body):
@@ -78,22 +83,22 @@ class Handler(BaseHTTPRequestHandler):
         """.encode()
         self._send("text/html; charset=utf-8", html)
 
+
 if __name__ == "__main__":
     print("Simple Calculator")
     print("-" * 20)
-    
+
     result1 = calculate('add', 10, 5)
     print(f"10 + 5 = {result1}")
-    
+
     result2 = calculate('multiply', 7, 3)
     print(f"7 * 3 = {result2}")
-    
-    unused_variable = "This variable is never used"
+
     print(f"Version: {APP_VERSION}")
     print(f"Deployment method: {DEPLOY_METHOD}")
     print(f"Deployed at: {DEPLOY_TIME}")
     print("Calculator completed successfully!")
     sys.stdout.flush()
 
+    # Keep the container alive by serving HTTP on port 5000
     HTTPServer(("0.0.0.0", 5000), Handler).serve_forever()
-    print("Calculator completed successfully!")
