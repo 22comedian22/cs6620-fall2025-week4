@@ -2,7 +2,7 @@ name: Docker Build, Push, and Deploy
 
 on:
   push:
-    branches: [ week02 ]
+    branches: [ main, week02 ]
 
 jobs:
   build:
